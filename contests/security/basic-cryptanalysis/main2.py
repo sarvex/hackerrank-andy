@@ -41,12 +41,12 @@ def resolveNextWord(translation, unresolved_words):
 def tryApplyWord(translation, unresolved_words, word, dict_word):
     # return if assuming word is dict_word is possible.
     translation = dict(translation)
-    ok = applyWord(translation, word, dict_word)
-    if not ok:
-        return None
-    ok = solve(translation, list(unresolved_words))
-    if ok:
-        return translation
+    if ok := applyWord(translation, word, dict_word):
+        return (
+            translation
+            if (ok := solve(translation, list(unresolved_words)))
+            else None
+        )
     else:
         return None
 
@@ -67,8 +67,7 @@ def solve(translation, unresolved_words):
     return True
 
 translation = {' ': ' '}
-ok = solve(translation, unresolved_words)
-if ok:
+if ok := solve(translation, unresolved_words):
     for c in input_text:
         sys.stdout.write(translation[c])
     sys.stdout.write("\n")

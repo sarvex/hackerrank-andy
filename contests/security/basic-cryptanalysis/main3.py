@@ -38,7 +38,7 @@ def learnImpossible():
     for word, possible_set in unresolved.items():
         for i in range(len(word)):
             source = word[i]
-            dest = alphabet - set([w[i] for w in possible_set])
+            dest = alphabet - {w[i] for w in possible_set}
             current_set = impossible.get(source, set())
             current_set.update(dest)
             impossible[source] = current_set
